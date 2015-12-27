@@ -1,0 +1,20 @@
+{
+  "name": "backend prototype",
+  "version": "0.0.1",
+  "description": "backendPrototype",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tony Jiang",
+  "license": "MIT",
+  "dependencies": {
+    "babel": "^5.8.34",
+    "body-parser": "^1.14.2",
+    "compression": "^1.6.0",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "serve-favicon": "^2.3.0"
+  }
+}

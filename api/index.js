@@ -1,16 +1,26 @@
 import Result from '../class/result';
 
-export default function(req, res)
+export default function()
 {
-    let result = new Result();
+    return {
+        init : function()
+        {
+            return [
+                {'method' : 'get', 'url' : '/'}
+            ];
+        },
 
-    let a = {
-        "test":"data"
+        exec : function(req, res, next)
+        {
+            let body = req.body;
+            let params = req.params;
+            let query = req.query;
+
+            let result = new Result();
+            result.result = 1;
+            result.message = "message";
+            result.data = {};
+            res.json(result);
+        }
     };
-
-    result.result = 1;
-    result.message = "new message";
-    result.data = a;
-
-    res.json(result);
 }

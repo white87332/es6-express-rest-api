@@ -1,4 +1,7 @@
 import fs from 'fs';
+import util from 'util';
+import Result from '../class/result';
+import {exec} from 'child_process';
 
 export default function(app)
 {
@@ -6,31 +9,47 @@ export default function(app)
     {
         for (let fileName of files)
         {
-            let apiFunObj  = require('../api/' + fileName)();
-            let configs = apiFunObj.init();
+            let apiFunObj = require('../api/' + fileName)();
+            let initObj   = apiFunObj.init();
+            let routes    = initObj.routes;
+            let initExec  = initObj.initExec;
 
-            for (let config of configs)
+            if((initExec !== undefined && !initExec) && (util.isArray(routes) && routes.length > 0))
             {
-                let method = config.method.toLowerCase();
-                let url = config.url.toLowerCase();
-
-                switch (method)
+                for (let route of routes)
                 {
-                    case 'get':
-                        app.get(url, apiFunObj.exec);
-                        break;
-                    case 'post':
-                        app.post(url, apiFunObj.exec);
-                        break;
-                    case 'put':
-                        app.put(url, apiFunObj.exec);
-                        break;
-                    case 'delete':
-                        app.delete(url, apiFunObj.exec);
-                        break;
-                    default:
+                    let url = route.url.toLowerCase();
+                    switch (route.method.toLowerCase())
+                    {
+                        case 'get':
+                            app.get(url, apiFunObj.exec);
+                            break;
+                        case 'post':
+                            app.post(url, apiFunObj.exec);
+                            break;
+                        case 'put':
+                            app.put(url, apiFunObj.exec);
+                            break;
+                        case 'delete':
+                            app.delete(url, apiFunObj.exec);
+                            break;
+                        default:
+                    }
                 }
             }
+            else if(initExec !== undefined && initExec)
+            {
+                exec(apiFunObj.exec());
+            }
         }
+
+        app.all('*', function(req, res)
+        {
+            let result = new Result();
+            result.result = 0;
+            result.message = "404 Not Found";
+            result.data = {};
+            res.json(result);
+        });
     });
 }

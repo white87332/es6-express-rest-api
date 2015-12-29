@@ -1,13 +1,19 @@
 import Result from '../class/result';
+import Logger from '../class/Logger';
+
+let log = new Logger();
 
 export default function()
 {
     return {
         init : function()
         {
-            return [
-                {'method' : 'get', 'url' : '/'}
-            ];
+            return {
+                initExec : false,
+                routes : [
+                    {'method' : 'get', 'url' : '/'}
+                ]
+            };
         },
 
         exec : function(req, res, next)

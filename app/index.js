@@ -4,7 +4,7 @@ import routes from './routes.js';
 import http from 'http';
 
 let app = express();
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 3001;
 
 middleware(app);
 routes(app);

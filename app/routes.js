@@ -3,6 +3,8 @@ import util from 'util';
 import Result from '../class/result';
 import {exec} from 'child_process';
 
+let result = new Result().getResultFormat();
+
 export default function(app)
 {
     fs.readdir('./api', (err, files) =>
@@ -42,7 +44,6 @@ export default function(app)
 
         app.all('*', function(req, res)
         {
-            let result = new Result();
             result.result = 0;
             result.message = "404 Not Found";
             result.data = {};

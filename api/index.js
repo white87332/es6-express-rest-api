@@ -1,6 +1,7 @@
 import Result from '../class/result';
 import Logger from '../class/Logger';
 
+let result = new Result().getResultFormat();
 let log = new Logger();
 
 export default function()
@@ -22,7 +23,6 @@ export default function()
             let params = req.params;
             let query = req.query;
 
-            let result = new Result();
             result.result = 1;
             result.message = "message";
             result.data = {};

@@ -2,12 +2,15 @@ export default class Result
 {
     constructor()
     {
-        let result = {
+        this.result = {
             "result" : 0,
             "message" : "message",
             "data" : {}
         };
+    }
 
-        return result;
+    getResultFormat()
+    {
+        return this.result;
     }
 }

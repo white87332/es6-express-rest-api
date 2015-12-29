@@ -10,10 +10,7 @@ export default function(app)
         for (let fileName of files)
         {
             let apiFunObj = require('../api/' + fileName)();
-            let initObj   = apiFunObj.init();
-            let routes    = initObj.routes;
-            let initExec  = initObj.initExec;
-
+            let {routes, initExec} = apiFunObj.init();
             if((initExec !== undefined && !initExec) && (util.isArray(routes) && routes.length > 0))
             {
                 for (let route of routes)

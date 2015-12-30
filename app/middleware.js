@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import compression from 'compression';
 import cors from 'cors';
-import Result from '../class/result';
+
 
 export default function(app)
 {
@@ -26,6 +26,7 @@ export default function(app)
     app.use(function(req, res, next)
     {
         res.contentType('application/json');
+        res.set('Cache-Control', 'no-cache');
         next();
     });
 }

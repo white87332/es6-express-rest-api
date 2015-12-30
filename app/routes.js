@@ -1,9 +1,6 @@
 import fs from 'fs';
 import util from 'util';
 import Result from '../class/result';
-import {exec} from 'child_process';
-
-let result = new Result().getResultFormat();
 
 export default function(app)
 {
@@ -18,32 +15,18 @@ export default function(app)
                 for (let route of routes)
                 {
                     let url = route.url.toLowerCase();
-                    switch (route.method.toLowerCase())
-                    {
-                        case 'get':
-                            app.get(url, apiFunObj.exec);
-                            break;
-                        case 'post':
-                            app.post(url, apiFunObj.exec);
-                            break;
-                        case 'put':
-                            app.put(url, apiFunObj.exec);
-                            break;
-                        case 'delete':
-                            app.delete(url, apiFunObj.exec);
-                            break;
-                        default:
-                    }
+                    app[route.method.toLowerCase()](url, apiFunObj.exec);
                 }
             }
             else if(initExec !== undefined && initExec)
             {
-                exec(apiFunObj.exec());
+                apiFunObj.exec();
             }
         }
 
         app.all('*', function(req, res)
         {
+            let result = new Result().getResultFormat();
             result.result = 0;
             result.message = "404 Not Found";
             result.data = {};

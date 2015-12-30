@@ -4,7 +4,7 @@ export default function()
         init : function()
         {
             return {
-                initExec: true
+                initExec: false
             };
         },
 

@@ -26,7 +26,7 @@ export default function(app)
 
         app.all('*', function(req, res)
         {
-            let result = new Result().getResultFormat();
+            let result = new Result().getResult();
             result.result = 0;
             result.message = "404 Not Found";
             result.data = {};

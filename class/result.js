@@ -9,7 +9,7 @@ export default class Result
         };
     }
 
-    getResultFormat()
+    getResult()
     {
         return this.result;
     }

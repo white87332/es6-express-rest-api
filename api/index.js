@@ -1,7 +1,7 @@
 import Result from '../class/result';
 import Logger from '../class/Logger';
 
-let result = new Result().getResultFormat();
+let result = new Result().getResult();
 let log = new Logger();
 
 export default function()

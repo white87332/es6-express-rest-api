@@ -8,7 +8,7 @@ export default function(app)
     {
         for (let fileName of files)
         {
-            let apiFunObj = require('../api/' + fileName)();
+            let apiFunObj = require('../api/' + fileName).default();
             let {routes, initExec} = apiFunObj.init();
             if((initExec !== undefined && !initExec) && (util.isArray(routes) && routes.length > 0))
             {

@@ -1,16 +1,14 @@
-export default function()
+export default
 {
-    return {
-        init : function()
-        {
-            return {
-                initExec: false
-            };
-        },
+    init: function()
+    {
+        return {
+            initExec: false
+        };
+    },
 
-        exec : function()
-        {
-            console.log("init exec");
-        }
-    };
-}
+    exec: function()
+    {
+        console.log("init exec");
+    }
+};

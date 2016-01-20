@@ -1,5 +1,5 @@
 import Result from '../class/result';
-import Logger from '../class/Logger';
+import Logger from '../class/logger';
 
 let result = new Result().getResult();
 let log = new Logger();

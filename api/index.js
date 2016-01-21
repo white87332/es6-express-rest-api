@@ -6,12 +6,6 @@ let result = new Result().getResult();
 let log = new Logger().getLog();
 let db = new Mongodb();
 
-let a= {_id:'56a07d93fc77f7f03ee11e49'};
-
-db.select("user", a, null,(err, res) =>{
-    console.log(res);
-});
-
 export default
 {
     init: function()

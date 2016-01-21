@@ -39,25 +39,37 @@ export default class Mongodb
 
     /**
      * [select description]
-     * @param  {[type]}   document collectionName
+     * @param  {[type]}   document       collectionName
      * @param  {[type]}   queryData      { _id: 56a07a7c57c3b99e3d5969fe }
-     * @param  {[type]}   limitNumber    Integeger
+     * @param  {[type]}   tmpSkipNumber  skip numbers
+     * @param  {[type]}   tmpLimitNumber limit numbers
      * @param  {Function} callback       callback
      */
-    select(collectionName, queryData, limitNumber, callback)
+    select(collectionName, queryData, tmpSkipNumber, tmpLimitNumber, callback)
     {
-        let data = (queryData === undefined)? {} : queryData;
-        if(data._id !== undefined)
+        let data, skipNumber, limitNumber;
+        if(queryData === undefined)
         {
-            data._id = new ObjectID(data._id);
+            data = {};
+            skipNumber = limitNumber = 0;
         }
-        let number = (limitNumber === null || limitNumber === undefined) ? 0 : limitNumber;
+        else
+        {
+            data = queryData;
+            skipNumber = (Number.isInteger(tmpSkipNumber)) ? tmpSkipNumber : 0;
+            limitNumber = (Number.isInteger(tmpLimitNumber)) ? tmpLimitNumber : 0;
+            if(data._id !== undefined)
+            {
+                data._id = new ObjectID(data._id);
+            }
+        }
+
         this.connect((err) =>
         {
             if (err === null)
             {
                 let collection = this.db.collection(collectionName);
-                collection.find(data).limit(number).toArray((err, docs) =>
+                collection.find(data).skip(skipNumber).limit(limitNumber).toArray((err, docs) =>
                 {
                     callback(err, docs);
                     this.close();

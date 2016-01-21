@@ -1,8 +1,16 @@
 import Result from '../class/result';
 import Logger from '../class/logger';
+import Mongodb from '../class/Mongodb';
 
 let result = new Result().getResult();
-let log = new Logger();
+let log = new Logger().getLog();
+let db = new Mongodb();
+
+let a= {_id:'56a07d93fc77f7f03ee11e49'};
+
+db.select("user", a, null,(err, res) =>{
+    console.log(res);
+});
 
 export default
 {
@@ -24,50 +32,9 @@ export default
         let params = req.params;
         let query = req.query;
 
-        // Promise.all([a(), b()]).then(function(data) { //cb
-        //     // success
-        //     console.log(data);
-        // })
-        // .catch(function(err) {
-        //     // error
-        //     console.log(err);
-        // });
-
-        // a().then((data) => {
-        //     return b(data);
-        // }).then((data)=>{
-        //
-        // }).catch((err) => {
-        //     console.log(err);
-        // });
-
-
         result.result = 1;
         result.message = "message";
         result.data = {};
         res.json(result);
     }
-
 };
-
-function a()
-{
-    return new Promise((resolve, reject) =>
-    {
-        resolve(
-        {
-            "email": "aszx87410@gmail.com",
-            "name": "huli",
-            "id": 5
-        });
-    });
-}
-
-function b()
-{
-    return new Promise((resolve, reject) =>
-    {
-        // resolve({"email":"aszx87410@gmail.com","name":"huli","id":6});
-        reject(new Error("error"));
-    });
-}

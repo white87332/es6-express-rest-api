@@ -16,10 +16,12 @@
     "async": "^1.5.2",
     "body-parser": "^1.14.2",
     "bunyan": "^1.5.1",
-    "compression": "^1.6.0",
+    "compression": "^1.6.1",
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "express-session": "^1.13.0",
+    "kerberos": "0.0.18",
+    "mongodb": "^2.1.4",
     "serve-favicon": "^2.3.0",
     "socket.io": "^1.4.4"
   },

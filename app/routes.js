@@ -3,6 +3,8 @@ import { isArray } from 'util';
 import Result from '../class/result';
 import async from 'async';
 
+let result = new Result().getResult();
+
 export default function(app)
 {
     async.series(
@@ -31,19 +33,16 @@ export default function(app)
 
                     callback();
                 });
-            },
-            function(callback)
-            {
-                app.all('*', function(req, res)
-                {
-                    let result = new Result().getResult();
-                    result.result = 0;
-                    result.message = "404 Not Found";
-                    result.data = {};
-                    res.json(result);
-                });
-
-                callback();
             }
-        ]);
+        ],
+        function(err, results)
+        {
+            app.all('*', (req, res) =>
+            {
+                result.result = 0;
+                result.message = "404 Not Found";
+                result.data = {};
+                res.json(result);
+            });
+        });
 }

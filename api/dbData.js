@@ -1,4 +1,3 @@
-import async from 'async';
 import Result from '../class/result';
 import Mongodb from '../class/Mongodb';
 
@@ -45,11 +44,7 @@ export default
         switch (req.method.toLowerCase())
         {
             case 'get':
-                let queryData = (params.id === undefined) ?
-                {} :
-                {
-                    _id: params.id
-                };
+                let queryData = (params.id === undefined) ? {} : { _id: params.id };
                 db.select(collectin, queryData, null, null, null, (err, docs) =>
                 {
                     if (err)

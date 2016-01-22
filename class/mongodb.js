@@ -49,7 +49,7 @@ export default class Mongodb
     select(collectionName, queryData, tmpSkipNumber, tmpLimitNumber, sort, callback)
     {
         let data, skipNumber, limitNumber;
-        if(queryData === undefined)
+        if (queryData === undefined)
         {
             data = {};
             skipNumber = limitNumber = 0;
@@ -59,16 +59,18 @@ export default class Mongodb
             data = queryData;
             skipNumber = (Number.isInteger(tmpSkipNumber)) ? tmpSkipNumber : 0;
             limitNumber = (Number.isInteger(tmpLimitNumber)) ? tmpLimitNumber : 0;
-            if(data._id !== undefined)
+            if (data._id !== undefined)
             {
                 data._id = new ObjectID(data._id);
             }
         }
 
         // sort
-        if(sort === null || !isObject(sort))
+        if (sort === null || !isObject(sort))
         {
-            sort = { _id: -1 };
+            sort = {
+                _id: -1
+            };
         }
         else
         {
@@ -135,7 +137,7 @@ export default class Mongodb
      */
     update(collectionName, whereObject, setObject, callback)
     {
-        if(whereObject._id !== undefined)
+        if (whereObject._id !== undefined)
         {
             whereObject._id = new ObjectID(whereObject._id);
         }
@@ -172,7 +174,7 @@ export default class Mongodb
         {
             if (err === null)
             {
-                if(whereObject._id !== undefined)
+                if (whereObject._id !== undefined)
                 {
                     whereObject._id = new ObjectID(whereObject._id);
                 }

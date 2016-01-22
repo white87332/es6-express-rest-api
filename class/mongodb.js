@@ -1,5 +1,5 @@
 import { MongoClient, ObjectID } from 'mongodb';
-import { isArray } from 'util';
+import { isArray, isObject } from 'util';
 import Logger from '../class/logger';
 
 let log = new Logger().getLog();
@@ -43,9 +43,10 @@ export default class Mongodb
      * @param  {[type]}   queryData      { _id: 56a07a7c57c3b99e3d5969fe }
      * @param  {[type]}   tmpSkipNumber  skip numbers
      * @param  {[type]}   tmpLimitNumber limit numbers
+     * @param  {[type]}   sort           { _id: -1 }
      * @param  {Function} callback       callback
      */
-    select(collectionName, queryData, tmpSkipNumber, tmpLimitNumber, callback)
+    select(collectionName, queryData, tmpSkipNumber, tmpLimitNumber, sort, callback)
     {
         let data, skipNumber, limitNumber;
         if(queryData === undefined)
@@ -64,12 +65,28 @@ export default class Mongodb
             }
         }
 
+        // sort
+        if(sort === null || !isObject(sort))
+        {
+            sort = { _id: -1 };
+        }
+        else
+        {
+            for (var key in sort)
+            {
+                if (!Number.isInteger(sort[key]) || sort[key] !== 1 || sort[key] !== -1)
+                {
+                    sort[key] = -1;
+                }
+            }
+        }
+
         this.connect((err) =>
         {
             if (err === null)
             {
                 let collection = this.db.collection(collectionName);
-                collection.find(data).skip(skipNumber).limit(limitNumber).toArray((err, docs) =>
+                collection.find(data).skip(skipNumber).limit(limitNumber).sort(sort).toArray((err, docs) =>
                 {
                     callback(err, docs);
                     this.close();
@@ -118,6 +135,10 @@ export default class Mongodb
      */
     update(collectionName, whereObject, setObject, callback)
     {
+        if(whereObject._id !== undefined)
+        {
+            whereObject._id = new ObjectID(whereObject._id);
+        }
         setObject = {
             $set: setObject
         };
@@ -151,6 +172,10 @@ export default class Mongodb
         {
             if (err === null)
             {
+                if(whereObject._id !== undefined)
+                {
+                    whereObject._id = new ObjectID(whereObject._id);
+                }
                 let collection = this.db.collection(collectionName);
                 collection.deleteOne(whereObject, (err, result) =>
                 {

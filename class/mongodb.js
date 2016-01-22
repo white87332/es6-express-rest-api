@@ -1,5 +1,6 @@
 import { MongoClient, ObjectID } from 'mongodb';
 import { isArray, isObject } from 'util';
+import mongodbConfig from '../config/mongodb.config';
 import Logger from '../class/logger';
 
 let log = new Logger().getLog();
@@ -8,7 +9,7 @@ export default class Mongodb
 {
     constructor()
     {
-        this.url = 'mongodb://localhost:27017/test';
+        this.url = 'mongodb://'+mongodbConfig.user+':'+mongodbConfig.pwd+'@localhost:'+mongodbConfig.port+'/'+mongodbConfig.database;
         this.db = null;
     }
 
@@ -149,7 +150,7 @@ export default class Mongodb
             if (err === null)
             {
                 let collection = this.db.collection(collectionName);
-                collection.updateOne(whereObject, setObject, (err, result) =>
+                collection.updateMany(whereObject, setObject, (err, result) =>
                 {
                     callback(err, result);
                     this.close();

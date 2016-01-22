@@ -1,10 +1,8 @@
 import Result from '../class/result';
 import Logger from '../class/logger';
-import Mongodb from '../class/Mongodb';
 
 let result = new Result().getResult();
 let log = new Logger().getLog();
-let db = new Mongodb();
 
 export default
 {

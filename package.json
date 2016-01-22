@@ -18,7 +18,7 @@
     "bunyan": "^1.5.1",
     "compression": "^1.6.1",
     "cors": "^2.7.1",
-    "express": "^4.13.3",
+    "express": "^4.13.4",
     "express-session": "^1.13.0",
     "kerberos": "0.0.18",
     "mongodb": "^2.1.4",

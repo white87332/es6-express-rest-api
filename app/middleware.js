@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import compression from 'compression';
 import cors from 'cors';
+import uuid from 'node-uuid';
 
 
 export default function(app)
@@ -16,7 +17,7 @@ export default function(app)
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(session(
     {
-        secret: 'cookie_secret',
+        secret: uuid.v1(),
         resave: true,
         saveUninitialized: true
     }));

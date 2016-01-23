@@ -1,7 +1,7 @@
 {
   "name": "es6-express-rest-api",
-  "version": "0.0.1",
-  "description": "es6-express-rest-api",
+  "version": "0.1.0",
+  "description": "This is for es6 rest api, use mongodb",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"

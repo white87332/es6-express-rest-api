@@ -5,6 +5,12 @@ export default class Logger
 {
     constructor()
     {
+        this.d = new Date();
+        this.year = this.d.getFullYear();
+        this.month = this.d.getMonth() + 1;
+        this.day = this.d.getDate();
+        this.setFolder();
+
         this.log = createLogger(
         {
             name: 'es6-express-rest-api',
@@ -15,42 +21,34 @@ export default class Logger
             },
             {
                 level: 'error',
-                path: './logs/' + this.setDate() + 'error.log',
+                path: './logs/' + this.getPath() + 'error.log',
             }]
         });
     }
 
-    setDate()
+    getPath()
     {
-        this.setFolder();
-
-        let d = new Date();
-        let date = d.getFullYear() + "/" + d.getMonth() + 1 + "/" + d.getDate() + "/";
+        let date = this.year + "/" + this.month + "/" + this.day + "/";
         return date;
     }
 
     setFolder()
     {
-        let d = new Date();
-        let year = d.getFullYear();
-        let month = d.getMonth() + 1;
-        let day = d.getDate();
+        this.month = (this.month === 1) ? "0" + this.month : this.month;
 
-        month = (month === 1) ? "0" + month : month;
-
-        if (!existsSync('./logs/' + year))
+        if (!existsSync('./logs/' + this.year))
         {
-            mkdirSync('./logs/' + year);
+            mkdirSync('./logs/' + this.year);
         }
 
-        if (!existsSync('./logs/' + year + "/" + month))
+        if (!existsSync('./logs/' + this.year + "/" + this.month))
         {
-            mkdirSync('./logs/' + year + "/" + month);
+            mkdirSync('./logs/' + this.year + "/" + this.month);
         }
 
-        if (!existsSync('./logs/' + year + "/" + month + "/" + day))
+        if (!existsSync('./logs/' + this.year + "/" + this.month + "/" + this.day))
         {
-            mkdirSync('./logs/' + year + "/" + month + "/" + day);
+            mkdirSync('./logs/' + this.year + "/" + this.month + "/" + this.day);
         }
     }
 

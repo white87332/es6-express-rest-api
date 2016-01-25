@@ -1,4 +1,5 @@
 import { createLogger } from 'bunyan';
+import { existsSync, mkdirSync } from 'fs';
 
 export default class Logger
 {
@@ -14,12 +15,43 @@ export default class Logger
             },
             {
                 level: 'error',
-                path: './logs/error.log',
-                type: 'rotating-file',
-                period: '1d',
-                count: 7
+                path: './logs/' + this.setDate() + 'error.log',
             }]
         });
+    }
+
+    setDate()
+    {
+        this.setFolder();
+
+        let d = new Date();
+        let date = d.getFullYear() + "/" + d.getMonth() + 1 + "/" + d.getDate() + "/";
+        return date;
+    }
+
+    setFolder()
+    {
+        let d = new Date();
+        let year = d.getFullYear();
+        let month = d.getMonth() + 1;
+        let day = d.getDate();
+
+        month = (month === 1) ? "0" + month : month;
+
+        if (!existsSync('./logs/' + year))
+        {
+            mkdirSync('./logs/' + year);
+        }
+
+        if (!existsSync('./logs/' + year + "/" + month))
+        {
+            mkdirSync('./logs/' + year + "/" + month);
+        }
+
+        if (!existsSync('./logs/' + year + "/" + month + "/" + day))
+        {
+            mkdirSync('./logs/' + year + "/" + month + "/" + day);
+        }
     }
 
     getLog()

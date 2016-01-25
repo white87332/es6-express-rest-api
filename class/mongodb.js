@@ -42,32 +42,39 @@ export default class Mongodb
      * [select description]
      * @param  {[type]}   document       collectionName
      * @param  {[type]}   queryData      { _id: 56a07a7c57c3b99e3d5969fe }
-     * @param  {[type]}   tmpSkipNumber  skip numbers
-     * @param  {[type]}   tmpLimitNumber limit numbers
-     * @param  {[type]}   sort           { _id: -1 }
+     * @param  {[type]}   conditionData  {
+     *                                   	skipNumber : 0
+     *                                   	limitNumber : 20
+     *                                   	sort : {
+     *                                   		_id : -1
+     *                                   	}
+     *                                   }
      * @param  {Function} callback       callback
      */
-    select(collectionName, queryData, tmpSkipNumber, tmpLimitNumber, sort, callback)
+    select(collectionName, queryData, conditionData, callback)
     {
-        let data, skipNumber, limitNumber;
-        if (queryData === undefined)
-        {
-            data = {};
-            skipNumber = limitNumber = 0;
-        }
-        else
+        let data = {};
+        let limitNumber, skipNumber, sort = conditionData.sort;
+
+        // one record data
+        if (queryData !== undefined)
         {
             data = queryData;
-            skipNumber = (Number.isInteger(tmpSkipNumber)) ? tmpSkipNumber : 0;
-            limitNumber = (Number.isInteger(tmpLimitNumber)) ? tmpLimitNumber : 0;
             if (data._id !== undefined)
             {
                 data._id = new ObjectID(data._id);
             }
+
+            limitNumber = skipNumber = 0;
+        }
+        else
+        {
+            limitNumber = (conditionData.limit !== undefined && Number.isInteger(conditionData.limit)) ? conditionData.limit : 20;
+            skipNumber = (conditionData.skip !== undefined && Number.isInteger(conditionData.skip)) ? conditionData.skip : 0;
         }
 
         // sort
-        if (sort === null || !isObject(sort))
+        if (sort === undefined || !isObject(sort))
         {
             sort = {
                 _id: -1

@@ -25,7 +25,7 @@ export default
             },
             {
                 'method': 'put',
-                'url': '/dbData/:collectin/:id'
+                'url': '/dbData/:collectin/'
             },
             {
                 'method': 'delete',
@@ -40,12 +40,34 @@ export default
         let params = req.params;
         let query = req.query;
 
+        // params
         let collectin = params.collectin;
+
         switch (req.method.toLowerCase())
         {
             case 'get':
-                let queryData = (params.id === undefined) ? {} : { _id: params.id };
-                db.select(collectin, queryData, null, null, null, (err, docs) =>
+
+                let skip = (Number.parseInt(query.skip))? Number.parseInt(query.skip) : 0;
+                let limit = (Number.parseInt(query.limit))? Number.parseInt(query.limit) : 20;
+                let sort = {} || JSON.parse(sort); //  object string
+
+                let queryData, conditionData = {};
+                if (params.id !== undefined)
+                {
+                    queryData = {
+                        _id: params.id
+                    };
+                }
+                else
+                {
+                    conditionData = {
+                        skip:  skip,
+                        limit: limit,
+                        sort: sort
+                    };
+                }
+
+                db.select(collectin, queryData, conditionData, (err, docs) =>
                 {
                     if (err)
                     {
@@ -79,33 +101,21 @@ export default
                 });
                 break;
             case 'put':
-                if (params.id === undefined)
+                db.update(collectin, body.where, body.set, (err, docs) =>
                 {
-                    result.result = 0;
-                    result.message = "no id value";
-                    res.json(result);
-                }
-                else
-                {
-                    let whereObject = {
-                        _id: params.id
-                    };
-                    db.update(collectin, whereObject, body, (err, docs) =>
+                    if (err)
                     {
-                        if (err)
-                        {
-                            result.result = 0;
-                            result.message = err.message;
-                        }
-                        else
-                        {
-                            result.result = 1;
-                            result.message = "update data successfully";
-                            result.data = {};
-                        }
-                        res.json(result);
-                    });
-                }
+                        result.result = 0;
+                        result.message = err.message;
+                    }
+                    else
+                    {
+                        result.result = 1;
+                        result.message = "update data successfully";
+                        result.data = {};
+                    }
+                    res.json(result);
+                });
                 break;
             case 'delete':
                 if (params.id === undefined)

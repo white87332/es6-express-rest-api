@@ -17,11 +17,11 @@ export default class Logger
             streams: [
             {
                 level: 'info',
-                stream: process.stdout
+                path: './logs/' + this.getPath() + 'info.log'
             },
             {
                 level: 'error',
-                path: './logs/' + this.getPath() + 'error.log',
+                path: './logs/' + this.getPath() + 'error.log'
             }]
         });
     }

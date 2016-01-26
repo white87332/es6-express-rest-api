@@ -6,7 +6,9 @@ import path from 'path';
 import compression from 'compression';
 import cors from 'cors';
 import uuid from 'node-uuid';
+import Logger from '../class/logger';
 
+let log = new Logger().getLog();
 
 export default function(app)
 {
@@ -24,8 +26,9 @@ export default function(app)
     app.use(compression({threshold: 0}));
     app.use(express.static(rootPath+'/public'));
     // app.use(favicon(rootPath + '/public/favicon.ico'));
-    app.use(function(req, res, next)
+    app.use((req, res, next) =>
     {
+        log.info({ip:req.ip});
         res.contentType('application/json');
         res.set('Cache-Control', 'no-cache');
         next();

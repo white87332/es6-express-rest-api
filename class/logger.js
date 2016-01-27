@@ -3,29 +3,6 @@ import { existsSync, mkdirSync } from 'fs';
 
 export default class Logger
 {
-    constructor()
-    {
-        this.d = new Date();
-        this.year = this.d.getFullYear();
-        this.month = this.d.getMonth() + 1;
-        this.day = this.d.getDate();
-        this.setFolder();
-
-        this.log = createLogger(
-        {
-            name: 'es6-express-rest-api',
-            streams: [
-            {
-                level: 'info',
-                path: './logs/' + this.getPath() + 'info.log'
-            },
-            {
-                level: 'error',
-                path: './logs/' + this.getPath() + 'error.log'
-            }]
-        });
-    }
-
     getPath()
     {
         let date = this.year + "/" + this.month + "/" + this.day + "/";
@@ -54,6 +31,25 @@ export default class Logger
 
     getLog()
     {
+        this.d = new Date();
+        this.year = this.d.getFullYear();
+        this.month = this.d.getMonth() + 1;
+        this.day = this.d.getDate();
+        this.setFolder();
+
+        this.log = createLogger(
+        {
+            name: 'es6-express-rest-api',
+            streams: [
+            {
+                level: 'info',
+                path: './logs/' + this.getPath() + 'info.log'
+            },
+            {
+                level: 'error',
+                path: './logs/' + this.getPath() + 'error.log'
+            }]
+        });
         return this.log;
     }
 }

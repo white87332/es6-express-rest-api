@@ -8,7 +8,7 @@ import cors from 'cors';
 import uuid from 'node-uuid';
 import Logger from '../class/logger';
 
-let log = new Logger().getLog();
+let logger = new Logger();
 
 export default function(app)
 {
@@ -28,6 +28,7 @@ export default function(app)
     // app.use(favicon(rootPath + '/public/favicon.ico'));
     app.use((req, res, next) =>
     {
+        let log = logger.getLog();
         log.info({ip:req.ip});
         res.contentType('application/json');
         res.set('Cache-Control', 'no-cache');

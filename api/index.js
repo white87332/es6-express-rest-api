@@ -2,7 +2,6 @@ import Result from '../class/result';
 
 let result = new Result().getResult();
 
-
 export default
 {
     init: function()

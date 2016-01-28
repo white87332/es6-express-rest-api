@@ -4,6 +4,7 @@ import https from 'https';
 import fs from 'fs';
 import middleware from './middleware.js';
 import routes from './routes.js';
+import globalSet from './globalSet.js';
 
 let app = express();
 
@@ -12,6 +13,9 @@ middleware(app);
 
 // routes
 routes(app);
+
+// globalSet
+globalSet();
 
 // port
 let httpPort = process.env.PORT || 3000;

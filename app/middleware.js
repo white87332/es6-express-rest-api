@@ -6,9 +6,6 @@ import path from 'path';
 import compression from 'compression';
 import cors from 'cors';
 import uuid from 'node-uuid';
-import Logger from '../class/logger';
-
-let logger = new Logger();
 
 export default function(app)
 {
@@ -16,20 +13,24 @@ export default function(app)
 
     app.use(cors());
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(bodyParser.urlencoded(
+    {
+        extended: true
+    }));
     app.use(session(
     {
         secret: uuid.v1(),
         resave: true,
         saveUninitialized: true
     }));
-    app.use(compression({threshold: 0}));
-    app.use(express.static(rootPath+'/public'));
+    app.use(compression(
+    {
+        threshold: 0
+    }));
+    app.use(express.static(rootPath + '/public'));
     // app.use(favicon(rootPath + '/public/favicon.ico'));
     app.use((req, res, next) =>
     {
-        let log = logger.getLog();
-        log.info({ip:req.ip});
         res.contentType('application/json');
         res.set('Cache-Control', 'no-cache');
         next();

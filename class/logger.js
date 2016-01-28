@@ -1,55 +1,47 @@
-import { createLogger } from 'bunyan';
-import { existsSync, mkdirSync } from 'fs';
+import winston from 'winston';
+import DailyRotateFile from 'winston-daily-rotate-file';
+import moment from 'moment';
 
 export default class Logger
 {
-    getPath()
+    constructor()
     {
-        let date = this.year + "/" + this.month + "/" + this.day + "/";
-        return date;
-    }
-
-    setFolder()
-    {
-        this.month = (this.month === 1) ? "0" + this.month : this.month;
-
-        if (!existsSync('./logs/' + this.year))
+        const dateFormat = function()
         {
-            mkdirSync('./logs/' + this.year);
-        }
+            return moment().format('YYYY-MM-DD HH:mm:ss:SSS');
+        };
 
-        if (!existsSync('./logs/' + this.year + "/" + this.month))
+        const infoLoggerTransport = new DailyRotateFile(
         {
-            mkdirSync('./logs/' + this.year + "/" + this.month);
-        }
+            name: 'info',
+            filename: './logs/info.log',
+            timestamp: dateFormat,
+            level: 'info',
+            colorize: true,
+            datePattern: '.yyyy-MM-dd'
+        });
 
-        if (!existsSync('./logs/' + this.year + "/" + this.month + "/" + this.day))
+        const errorTransport = new DailyRotateFile(
         {
-            mkdirSync('./logs/' + this.year + "/" + this.month + "/" + this.day);
-        }
+            name: 'error',
+            filename: './logs/error.log',
+            timestamp: dateFormat,
+            level: 'error',
+            colorize: true,
+            datePattern: '.yyyy-MM-dd'
+        });
+
+        this.logger = new(winston.Logger)(
+        {
+            transports: [
+                infoLoggerTransport,
+                errorTransport
+            ]
+        });
     }
 
     getLog()
     {
-        this.d = new Date();
-        this.year = this.d.getFullYear();
-        this.month = this.d.getMonth() + 1;
-        this.day = this.d.getDate();
-        this.setFolder();
-
-        this.log = createLogger(
-        {
-            name: 'es6-express-rest-api',
-            streams: [
-            {
-                level: 'info',
-                path: './logs/' + this.getPath() + 'info.log'
-            },
-            {
-                level: 'error',
-                path: './logs/' + this.getPath() + 'error.log'
-            }]
-        });
-        return this.log;
+        return this.logger;
     }
 }

@@ -34,7 +34,7 @@ export default
         };
     },
 
-    exec: function(req, res, next)
+    exec: function(req, res)
     {
         let body = req.body;
         let params = req.params;

@@ -12,11 +12,15 @@ export default
             {
                 'method': 'get',
                 'url': '/'
+            },
+            {
+                'method': 'post',
+                'url': '/'
             }]
         };
     },
 
-    exec: function(req, res, next)
+    exec: function(req, res)
     {
         let body = req.body;
         let params = req.params;

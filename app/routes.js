@@ -2,8 +2,12 @@ import fs from 'fs';
 import { isArray } from 'util';
 import Result from '../class/result';
 import async from 'async';
+import path from 'path';
+import multipart from 'connect-multiparty';
 
 let result = new Result().getResult();
+let rootPath = path.normalize(__dirname + '/..');
+let uploadOption = {uploadDir:rootPath+"/uploads/"};
 
 export default function(app)
 {
@@ -22,7 +26,15 @@ export default function(app)
                             for (let route of routes)
                             {
                                 let url = route.url.toLowerCase();
-                                app[route.method.toLowerCase()](url, apiFunObj.exec);
+                                let method = route.method.toLowerCase();
+                                if(method === 'post')
+                                {
+                                    app[route.method.toLowerCase()](url, multipart(uploadOption), apiFunObj.exec);
+                                }
+                                else
+                                {
+                                    app[route.method.toLowerCase()](url, apiFunObj.exec);
+                                }
                             }
                         }
                         else if(initExec !== undefined && initExec)

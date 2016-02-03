@@ -112,7 +112,6 @@ export default
                     {
                         result.result = 1;
                         result.message = "update data successfully";
-                        result.data = {};
                     }
                     res.json(result);
                 });
@@ -140,7 +139,6 @@ export default
                         {
                             result.result = 1;
                             result.message = "delete data successfully";
-                            result.data = {};
                         }
                         res.json(result);
                     });

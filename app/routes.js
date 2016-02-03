@@ -7,7 +7,9 @@ import multipart from 'connect-multiparty';
 
 let result = new Result().getResult();
 let rootPath = path.normalize(__dirname + '/..');
-let uploadOption = {uploadDir:rootPath+"/uploads/"};
+let uploadOption = {
+    uploadDir: rootPath + "/uploads/"
+};
 
 export default function(app)
 {
@@ -20,14 +22,18 @@ export default function(app)
                     for (let fileName of files)
                     {
                         let apiFunObj = require('../api/' + fileName).default;
-                        let { routes, initExec } = apiFunObj.init();
-                        if((initExec !== undefined && !initExec) && (isArray(routes) && routes.length > 0))
+                        let
+                        {
+                            routes,
+                            initExec
+                        } = apiFunObj.init();
+                        if ((initExec !== undefined && !initExec) && (isArray(routes) && routes.length > 0))
                         {
                             for (let route of routes)
                             {
                                 let url = route.url.toLowerCase();
                                 let method = route.method.toLowerCase();
-                                if(method === 'post')
+                                if (method === 'post')
                                 {
                                     app[route.method.toLowerCase()](url, multipart(uploadOption), apiFunObj.exec);
                                 }
@@ -37,7 +43,7 @@ export default function(app)
                                 }
                             }
                         }
-                        else if(initExec !== undefined && initExec)
+                        else if (initExec !== undefined && initExec)
                         {
                             apiFunObj.exec();
                         }

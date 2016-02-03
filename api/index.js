@@ -12,10 +12,6 @@ export default
             {
                 'method': 'get',
                 'url': '/'
-            },
-            {
-                'method': 'post',
-                'url': '/'
             }]
         };
     },

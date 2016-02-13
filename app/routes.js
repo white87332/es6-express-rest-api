@@ -21,31 +21,30 @@ export default function(app)
                 {
                     for (let fileName of files)
                     {
-                        let apiFunObj = require('../api/' + fileName).default;
-                        let
+                        if (fileName !== '.DS_Store')
                         {
-                            routes,
-                            initExec
-                        } = apiFunObj.init();
-                        if ((initExec !== undefined && !initExec) && (isArray(routes) && routes.length > 0))
-                        {
-                            for (let route of routes)
+                            let apiFunObj = require('../api/' + fileName).default;
+                            let { routes, initExec } = apiFunObj.init();
+                            if ((initExec !== undefined && !initExec) && (isArray(routes) && routes.length > 0))
                             {
-                                let url = route.url.toLowerCase();
-                                let method = route.method.toLowerCase();
-                                if (method === 'post')
+                                for (let route of routes)
                                 {
-                                    app[route.method.toLowerCase()](url, multipart(uploadOption), apiFunObj.exec);
-                                }
-                                else
-                                {
-                                    app[route.method.toLowerCase()](url, apiFunObj.exec);
+                                    let url = route.url.toLowerCase();
+                                    let method = route.method.toLowerCase();
+                                    if (method === 'post')
+                                    {
+                                        app[route.method.toLowerCase()](url, multipart(uploadOption), apiFunObj.exec);
+                                    }
+                                    else
+                                    {
+                                        app[route.method.toLowerCase()](url, apiFunObj.exec);
+                                    }
                                 }
                             }
-                        }
-                        else if (initExec !== undefined && initExec)
-                        {
-                            apiFunObj.exec();
+                            else if (initExec !== undefined && initExec)
+                            {
+                                apiFunObj.exec();
+                            }
                         }
                     }
 

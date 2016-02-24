@@ -54,12 +54,17 @@ export default function(app)
         ],
         function(err, results)
         {
-            app.all('*', (req, res) =>
+            // app.all('*', (req, res) =>
+            // {
+            //     result.result = 0;
+            //     result.message = "404 Not Found";
+            //     result.data = {};
+            //     res.json(result);
+            // });
+
+            app.get('*', function(req, res)
             {
-                result.result = 0;
-                result.message = "404 Not Found";
-                result.data = {};
-                res.json(result);
+                res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
             });
         });
 }

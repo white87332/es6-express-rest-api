@@ -23,8 +23,8 @@ export default function(app)
                     {
                         if (fileName !== '.DS_Store')
                         {
-                            let apiFunObj = require('../api/' + fileName).default;
-                            let { routes, initExec } = apiFunObj.init();
+                            let apiObj = require('../api/' + fileName).default;
+                            let { routes, initExec } = apiObj.init();
                             if ((initExec !== undefined && !initExec) && (isArray(routes) && routes.length > 0))
                             {
                                 for (let route of routes)
@@ -33,17 +33,17 @@ export default function(app)
                                     let method = route.method.toLowerCase();
                                     if (method === 'post')
                                     {
-                                        app[route.method.toLowerCase()](url, multipart(uploadOption), apiFunObj.exec);
+                                        app[route.method.toLowerCase()](url, multipart(uploadOption), apiObj.exec);
                                     }
                                     else
                                     {
-                                        app[route.method.toLowerCase()](url, apiFunObj.exec);
+                                        app[route.method.toLowerCase()](url, apiObj.exec);
                                     }
                                 }
                             }
                             else if (initExec !== undefined && initExec)
                             {
-                                apiFunObj.exec();
+                                apiObj.exec();
                             }
                         }
                     }

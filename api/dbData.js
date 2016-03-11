@@ -1,8 +1,10 @@
 import Result from '../class/result';
-import Mongodb from '../class/Mongodb';
+// import Mongodb from '../class/mongodb';
+import Tingodb from '../class/tingodb';
 
 let result = new Result().getResult();
-let db = new Mongodb();
+// let db = new Mongodb();
+let db = new Tingodb();
 
 export default
 {
@@ -42,14 +44,13 @@ export default
 
         // params
         let collectin = params.collectin;
-
+        result.data = {};
         switch (req.method.toLowerCase())
         {
             case 'get':
-
                 let skip = (Number.parseInt(query.skip))? Number.parseInt(query.skip) : 0;
                 let limit = (Number.parseInt(query.limit))? Number.parseInt(query.limit) : 20;
-                let sort = {} || JSON.parse(sort); //  object string
+                let sort = (query.sort === undefined)? {} : JSON.parse(query.sort); //  object string
 
                 let queryData, conditionData = {};
                 if (params.id !== undefined)

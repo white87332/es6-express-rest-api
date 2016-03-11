@@ -84,7 +84,7 @@ export default class Mongodb
         {
             for (var key in sort)
             {
-                if (!Number.isInteger(sort[key]) || sort[key] !== 1 || sort[key] !== -1)
+                if (!Number.isInteger(sort[key]) || sort[key] !== 1 && sort[key] !== -1)
                 {
                     sort[key] = -1;
                 }

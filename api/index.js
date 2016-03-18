@@ -9,10 +9,9 @@ export default
         return {
             initExec: false,
             routes: [
-            {
-                'method': 'get',
-                'url': '/'
-            }]
+                {'method': 'get','url': '/'},
+                {'method': 'post','url': '/'},
+            ]
         };
     },
 

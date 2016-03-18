@@ -18,7 +18,7 @@ routes(app);
 globalSet();
 
 // port
-let httpPort = process.env.PORT || 3000;
+let httpPort = process.env.PORT || 3001;
 let httpsPort = process.env.HTTPS_PORT || 3443;
 
 // http

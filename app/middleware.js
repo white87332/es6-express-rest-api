@@ -28,7 +28,7 @@ export default function(app)
         threshold: 0
     }));
     app.use(express.static(rootPath + '/public'));
-    
+
     // prerender-node
     app.use(require('prerender-node').set('prerenderServiceUrl', 'http://localhost:3000/'));
 

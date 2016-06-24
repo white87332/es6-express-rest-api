@@ -13,20 +13,14 @@ export default function(app)
 
     app.use(cors());
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded(
-    {
-        extended: true
-    }));
+    app.use(bodyParser.urlencoded({extended: true}));
     app.use(session(
     {
         secret: uuid.v1(),
         resave: true,
         saveUninitialized: true
     }));
-    app.use(compression(
-    {
-        threshold: 0
-    }));
+    app.use(compression());
     app.use(express.static(rootPath + '/public'));
 
     // prerender-node

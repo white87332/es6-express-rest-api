@@ -13,9 +13,11 @@
   "author": "Tony Jiang",
   "license": "MIT",
   "dependencies": {
-    "async": "^1.5.2",
     "babel-core": "^6.10.4",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "connect-multiparty": "^2.0.0",

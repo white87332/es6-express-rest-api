@@ -2,7 +2,6 @@ import "babel-polyfill";
 import fs from 'fs';
 import { isArray } from 'util';
 import Result from '../class/result';
-import async from 'async';
 import path from 'path';
 
 let result = new Result().getResult();

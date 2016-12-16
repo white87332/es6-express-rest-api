@@ -4,13 +4,9 @@ import { isArray } from 'util';
 import Result from '../class/result';
 import async from 'async';
 import path from 'path';
-import multipart from 'connect-multiparty';
 
 let result = new Result().getResult();
 let apiPath = path.resolve(__dirname, "../api");
-let uploadOption = {
-    uploadDir: path.resolve(__dirname, "../../../uploads")
-};
 
 export default async function(app)
 {
@@ -22,6 +18,12 @@ export default async function(app)
     catch (e)
     {
         console.log(e);
+    }
+    finally
+    {
+        return new Promise((resolve, reject) => {
+            resolve(null);
+        });
     }
 }
 
@@ -43,14 +45,7 @@ function routesSet(app)
                         {
                             let url = route.url.toLowerCase();
                             let method = route.method.toLowerCase();
-                            if (method === 'post')
-                            {
-                                app[route.method.toLowerCase()](url, multipart(uploadOption), apiObj.exec);
-                            }
-                            else
-                            {
-                                app[route.method.toLowerCase()](url, apiObj.exec);
-                            }
+                            app[route.method.toLowerCase()](url, apiObj.exec);
                         }
                     }
                     else if (initExec !== undefined && initExec)
@@ -68,13 +63,23 @@ function routeErrorSet(app)
 {
     return new Promise((resolve, reject) =>
     {
-        app.get('*', function(req, res) {
-            res.status(404).send('Server.js > 404 - Page Not Found');
+        app.get('*', (req, res) => {
+            res.status(404).send({
+                "result": 0,
+                "errorcode": "404",
+                "message": "route not found",
+                "data": {}
+            });
         });
 
         app.use((err, req, res, next) =>{
-            console.log(err);
-            res.status(500).send("Server error");
+            log.error(err);
+            res.status(500).send({
+                "result": 0,
+                "errorcode": "500",
+                "message": "server error",
+                "data": {}
+            });
         });
 
         resolve();

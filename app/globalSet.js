@@ -2,5 +2,8 @@ import logger from '../class/logger';
 
 export default function()
 {
-    global.log = new logger().getLog();
+    return new Promise((resolve, reject) => {
+        global.log = new logger().getLog();
+        resolve();
+    });
 }

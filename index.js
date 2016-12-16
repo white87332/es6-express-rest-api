@@ -8,14 +8,11 @@ import globalSet from './app/globalSet.js';
 
 let app = express();
 
-// middleware
-middleware(app);
-
-// routes
-routes(app);
-
-// globalSet
-globalSet();
+(async (app) => {
+    await globalSet();
+    await middleware(app);
+    await routes(app);
+})(app);
 
 // port
 let httpPort = process.env.PORT || 3000;

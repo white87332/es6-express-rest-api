@@ -1,6 +1,6 @@
 {
   "name": "es6-express-rest-api",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "This is for es6 rest api, use mongodb",
   "main": "index.js",
   "scripts": {
@@ -22,14 +22,14 @@
     "jsonwebtoken": "^7.2.1",
     "kerberos": "0.0.18",
     "moment": "^2.17.1",
-    "mongodb": "^2.2.20",
+    "mongodb": "^2.2.21",
     "multiparty": "^4.1.2",
     "prerender-node": "^2.7.0",
     "socket.io": "^1.7.2",
     "spdy": "^3.4.4",
     "tingodb": "^0.4.2",
     "winston": "^2.3.0",
-    "winston-daily-rotate-file": "^1.4.2"
+    "winston-daily-rotate-file": "^1.4.3"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",

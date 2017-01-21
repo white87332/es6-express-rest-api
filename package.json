@@ -28,7 +28,7 @@
     "socket.io": "^1.7.2",
     "spdy": "^3.4.4",
     "tingodb": "^0.4.2",
-    "winston": "^2.3.0",
+    "winston": "^2.3.1",
     "winston-daily-rotate-file": "^1.4.3"
   },
   "devDependencies": {

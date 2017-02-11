@@ -1,7 +1,7 @@
-var Db = require('tingodb')().Db;
+
 import { isArray, isObject } from 'util';
-import Logger from '../class/logger';
-let log = new Logger().getLog();
+
+const Db = require('tingodb')().Db;
 
 export default class Tingodb
 {
@@ -26,13 +26,16 @@ export default class Tingodb
     select(collectionName, queryData, conditionData, callback)
     {
         let data = {};
-        let limitNumber, skipNumber, sort = conditionData.sort;
+        let limitNumber = conditionData.sort;
+        let skipNumber = conditionData.sort;
+        let sort = conditionData.sort;
 
         // one record data
         if (queryData !== undefined)
         {
             data = queryData;
-            limitNumber = skipNumber = 0;
+            limitNumber = 0;
+            skipNumber = 0;
         }
         else
         {
@@ -49,9 +52,9 @@ export default class Tingodb
         }
         else
         {
-            for (var key in sort)
+            for (let key in sort)
             {
-                if (!Number.isInteger(sort[key]) || sort[key] !== 1 && sort[key] !== -1)
+                if ((!Number.isInteger(sort[key]) || sort[key] !== 1) && sort[key] !== -1)
                 {
                     sort[key] = -1;
                 }
@@ -59,7 +62,8 @@ export default class Tingodb
         }
 
         let collection = this.db.collection(collectionName);
-        collection.find(data).skip(skipNumber).limit(limitNumber).sort(sort).toArray((err, docs) =>
+        collection.find(data).skip(skipNumber).limit(limitNumber).sort(sort)
+        .toArray((err, docs) =>
         {
             callback(err, docs);
         });
@@ -95,7 +99,7 @@ export default class Tingodb
         };
 
         let collection = this.db.collection(collectionName);
-        collection.update(whereObject, setObject, (err, result) =>
+        collection.update(whereObject, setObject, (err) =>
         {
             callback(err);
         });

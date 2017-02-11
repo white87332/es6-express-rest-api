@@ -5,8 +5,9 @@ const path = require('path');
 function getExternals()
 {
     const nodeModules = fs.readdirSync(path.join(process.cwd(), 'node_modules'));
-    return nodeModules.reduce(function(ext, mod) {
-        ext[mod] = 'commonjs ' + mod;
+    return nodeModules.reduce((ext, mod) =>
+    {
+        ext[mod] = `commonjs ${mod}`;
         return ext;
     }, {});
 }
@@ -17,7 +18,7 @@ module.exports = {
     output: {
         path: path.join(process.cwd(), 'build'),
         filename: 'index.js',
-        chunkFilename: "[name].js"
+        chunkFilename: '[id].js'
     },
     externals: [getExternals()],
     node: {
@@ -38,10 +39,6 @@ module.exports = {
     },
     plugins: [
         new webpack.IgnorePlugin(/\.(css|less|scss|svg|png|jpe?g|png)$/),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
+        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
     ]
 };

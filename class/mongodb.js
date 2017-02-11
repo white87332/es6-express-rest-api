@@ -9,7 +9,7 @@ export default class Mongodb
 {
     constructor()
     {
-        this.url = 'mongodb://'+mongodbConfig.user+':'+mongodbConfig.pwd+'@localhost:'+mongodbConfig.port+'/'+mongodbConfig.database;
+        this.url = `mongodb://${mongodbConfig.user}:${mongodbConfig.pwd}@localhost:${mongodbConfig.port}/${mongodbConfig.database}`;
         this.db = null;
     }
 
@@ -21,12 +21,12 @@ export default class Mongodb
             if (err)
             {
                 dbConnection = true;
-                log.error("Connected failurely to server");
+                log.error('Connected failurely to server');
             }
             else
             {
                 this.db = db;
-                log.info("Connected correctly to server");
+                // log.info('Connected correctly to server');
             }
 
             callback(dbConnection);
@@ -54,7 +54,9 @@ export default class Mongodb
     select(collectionName, queryData, conditionData, callback)
     {
         let data = {};
-        let limitNumber, skipNumber, sort = conditionData.sort;
+        let limitNumber;
+        let skipNumber;
+        let sort = conditionData.sort;
 
         // one record data
         if (queryData !== undefined)
@@ -82,21 +84,22 @@ export default class Mongodb
         }
         else
         {
-            for (var key in sort)
+            for (let key in sort)
             {
-                if (!Number.isInteger(sort[key]) || sort[key] !== 1 && sort[key] !== -1)
+                if ((!Number.isInteger(sort[key]) || sort[key] !== 1) && sort[key] !== -1)
                 {
                     sort[key] = -1;
                 }
             }
         }
 
-        this.connect((err) =>
+        this.connect((conErr) =>
         {
-            if (err === null)
+            if (conErr === null)
             {
                 let collection = this.db.collection(collectionName);
-                collection.find(data).skip(skipNumber).limit(limitNumber).sort(sort).toArray((err, docs) =>
+                collection.find(data).skip(skipNumber).limit(limitNumber).sort(sort)
+                .toArray((err, docs) =>
                 {
                     callback(err, docs);
                     this.close();
@@ -104,7 +107,7 @@ export default class Mongodb
             }
             else
             {
-                callback(true, "connect error");
+                callback(true, 'connect error');
             }
         });
     }
@@ -118,9 +121,9 @@ export default class Mongodb
     insert(collectionName, data, callback)
     {
         let arrayData = (isArray(data)) ? data : [data];
-        this.connect((err) =>
+        this.connect((conErr) =>
         {
-            if (err === null)
+            if (conErr === null)
             {
                 let collection = this.db.collection(collectionName);
                 collection.insertMany(arrayData, (err, result) =>
@@ -131,7 +134,7 @@ export default class Mongodb
             }
             else
             {
-                callback(true, "connect error");
+                callback(true, 'connect error');
             }
         });
     }
@@ -152,9 +155,9 @@ export default class Mongodb
         setObject = {
             $set: setObject
         };
-        this.connect((err) =>
+        this.connect((conErr) =>
         {
-            if (err === null)
+            if (conErr === null)
             {
                 let collection = this.db.collection(collectionName);
                 collection.updateMany(whereObject, setObject, (err, result) =>
@@ -165,7 +168,7 @@ export default class Mongodb
             }
             else
             {
-                callback(true, "connect error");
+                callback(true, 'connect error');
             }
         });
     }
@@ -178,9 +181,9 @@ export default class Mongodb
      */
     delete(collectionName, whereObject, callback)
     {
-        this.connect((err) =>
+        this.connect((conErr) =>
         {
-            if (err === null)
+            if (conErr === null)
             {
                 if (whereObject._id !== undefined)
                 {
@@ -195,7 +198,7 @@ export default class Mongodb
             }
             else
             {
-                callback(true, "connect error");
+                callback(true, 'connect error');
             }
         });
     }

@@ -1,9 +1,6 @@
-import logger from '../class/logger';
+import Logger from '../class/logger';
 
-export default function()
+export default () =>
 {
-    return new Promise((resolve, reject) => {
-        global.log = new logger().getLog();
-        resolve();
-    });
-}
+    global.log = new Logger().getLog();
+};

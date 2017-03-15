@@ -29,17 +29,17 @@
     "spdy": "^3.4.4",
     "tingodb": "^0.4.2",
     "winston": "^2.3.1",
-    "winston-daily-rotate-file": "^1.4.5"
+    "winston-daily-rotate-file": "^1.4.6"
   },
   "devDependencies": {
-    "babel-core": "^6.23.1",
+    "babel-core": "^6.24.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.4.0",
     "babel-polyfill": "^6.23.0",
-    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-es2015": "^6.24.0",
     "babel-preset-stage-0": "^6.22.0",
-    "babel-register": "^6.23.0",
-    "cross-env": "^3.2.3",
+    "babel-register": "^6.24.0",
+    "cross-env": "^3.2.4",
     "eslint": "^3.17.1",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",

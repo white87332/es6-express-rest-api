@@ -8,35 +8,36 @@ let db = new Tingodb();
 
 export default
 {
-    init: function()
+    init()
     {
         return {
             initExec: false,
             routes: [
-            {
-                'method': 'get',
-                'url': '/dbData/:collectin'
-            },
-            {
-                'method': 'get',
-                'url': '/dbData/:collectin/:id'
-            },
-            {
-                'method': 'post',
-                'url': '/dbData/:collectin'
-            },
-            {
-                'method': 'put',
-                'url': '/dbData/:collectin/'
-            },
-            {
-                'method': 'delete',
-                'url': '/dbData/:collectin/:id'
-            }]
+                {
+                    method: 'get',
+                    url: '/dbData/:collectin'
+                },
+                {
+                    method: 'get',
+                    url: '/dbData/:collectin/:id'
+                },
+                {
+                    method: 'post',
+                    url: '/dbData/:collectin'
+                },
+                {
+                    method: 'put',
+                    url: '/dbData/:collectin/'
+                },
+                {
+                    method: 'delete',
+                    url: '/dbData/:collectin/:id'
+                }
+            ]
         };
     },
 
-    exec: function(req, res)
+    exec(req, res)
     {
         let body = req.body;
         let params = req.params;
@@ -48,11 +49,12 @@ export default
         switch (req.method.toLowerCase())
         {
             case 'get':
-                let skip = (Number.parseInt(query.skip))? Number.parseInt(query.skip) : 0;
-                let limit = (Number.parseInt(query.limit))? Number.parseInt(query.limit) : 20;
-                let sort = (query.sort === undefined)? {} : JSON.parse(query.sort); //  object string
+                let skip = (Number.parseInt(query.skip, 10)) ? Number.parseInt(query.skip, 10) : 0;
+                let limit = (Number.parseInt(query.limit, 10)) ? Number.parseInt(query.limit, 10) : 20;
+                let sort = (query.sort === undefined) ? {} : JSON.parse(query.sort); //  object string
 
-                let queryData, conditionData = {};
+                let queryData = {};
+                let conditionData = {};
                 if (params.id !== undefined)
                 {
                     queryData = {
@@ -62,9 +64,9 @@ export default
                 else
                 {
                     conditionData = {
-                        skip:  skip,
-                        limit: limit,
-                        sort: sort
+                        skip,
+                        limit,
+                        sort
                     };
                 }
 
@@ -78,7 +80,7 @@ export default
                     else
                     {
                         result.result = 1;
-                        result.message = "get data successfully";
+                        result.message = 'get data successfully';
                         result.data = docs;
                     }
                     res.json(result);
@@ -95,7 +97,7 @@ export default
                     else
                     {
                         result.result = 1;
-                        result.message = "insert data successfully";
+                        result.message = 'insert data successfully';
                         result.data = docs.ops;
                     }
                     res.json(result);
@@ -112,7 +114,7 @@ export default
                     else
                     {
                         result.result = 1;
-                        result.message = "update data successfully";
+                        result.message = 'update data successfully';
                     }
                     res.json(result);
                 });
@@ -121,7 +123,7 @@ export default
                 if (params.id === undefined)
                 {
                     result.result = 0;
-                    result.message = "no id value";
+                    result.message = 'no id value';
                     res.json(result);
                 }
                 else
@@ -139,7 +141,7 @@ export default
                         else
                         {
                             result.result = 1;
-                            result.message = "delete data successfully";
+                            result.message = 'delete data successfully';
                         }
                         res.json(result);
                     });

@@ -4,25 +4,25 @@ let result = new Result().getResult();
 
 export default
 {
-    init: function()
+    init()
     {
         return {
             initExec: false,
             routes: [
-                {'method': 'get','url': '/'},
-                {'method': 'post','url': '/'},
+                { method: 'get', url: '/' },
+                { method: 'post', url: '/' },
             ]
         };
     },
 
-    exec: function(req, res)
+    exec(req, res)
     {
-        let body = req.body;
-        let params = req.params;
-        let query = req.query;
+        // let body = req.body;
+        // let params = req.params;
+        // let query = req.query;
 
         result.result = 1;
-        result.message = "message";
+        result.message = 'message';
         result.data = {};
         res.json(result);
     }

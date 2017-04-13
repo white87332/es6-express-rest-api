@@ -67,7 +67,8 @@ export default class Mongodb
                 data._id = new ObjectID(data._id);
             }
 
-            limitNumber = skipNumber = 0;
+            limitNumber = 0;
+            skipNumber = 0;
         }
         else
         {
